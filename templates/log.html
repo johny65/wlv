@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Web Log Viewer</title>
+</head>
+<body style="font-family: monospace">
+    {% for l in log_content %}
+        {% if "[MUY DETALLADO]" in l %}
+            <p><strong>{{ l }}</strong></p>
+        {% elif "[ADVERTENCIA]" in l %}
+            <p style="color: goldenrod; font-weight: bold">{{ l }}</p>
+        {% elif "[GRAVE]" in l %}
+            <p style="color: darkred; font-weight: bold">{{ l }}</p>
+        {% else %}
+            <p>{{ l }}</p>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

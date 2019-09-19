@@ -5,11 +5,11 @@
 </head>
 <body style="font-family: monospace">
     {% for l in log_content %}
-        {% if "[MUY DETALLADO]" in l %}
+        {% if l.level == "finer" %}
             <p><strong>{{ l }}</strong></p>
-        {% elif "[ADVERTENCIA]" in l %}
+        {% elif l.level == "warn" %}
             <p style="color: goldenrod; font-weight: bold">{{ l }}</p>
-        {% elif "[GRAVE]" in l %}
+        {% elif l.level == "err" %}
             <p style="color: darkred; font-weight: bold">{{ l }}</p>
         {% else %}
             <p>{{ l }}</p>

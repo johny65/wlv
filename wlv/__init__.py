@@ -1,5 +1,6 @@
 import os
 from flask import Flask, session, redirect, url_for, escape, request, render_template
+from .logcollect import GlassfishFormatter
 
 app = Flask(__name__)
 
@@ -45,10 +46,12 @@ def index():
     if not log_path:
         return "Ningún log configurado."
     
-    with open(log_path) as log_file:
-        log_content = []
-        for line in log_file.readlines():
-            if "[MUY DETALLADO]" in line:
-                line = "<strong>" + line + "</strong>"
-            log_content.append(line)
-    return render_template("log.html", log_content=log_content)
+    formatter = GlassfishFormatter()
+    try:
+        with open(log_path) as log_file:
+            log_content = [formatter.parse_line(line) for line in log_file.readlines()]
+        return render_template("log.html", log_content=log_content)
+    except FileNotFoundError:
+        return "No se encontró el archivo de log ({}).".format(log_path)
+    except IOError:
+        return "Ocurrió un error abriendo el archivo de log ({}).".format(log_path)

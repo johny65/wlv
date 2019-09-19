@@ -1,3 +1,24 @@
+class LogLine:
+    level = ""
+    message = ""
+    def __init__(self, level, message):
+        self.level = level
+        self.message = message
+    def __str__(self):
+        return self.message
+
+class GlassfishFormatter:
+    def parse_line(self, line):
+        if "[MUY DETALLADO]" in line or "[FINER]" in line:
+            level = "finer"
+        elif "[ADVERTENCIA]" in line or "[WARNING]" in line:
+            level = "warn"
+        elif "[GRAVE]" in line or "[SEVERE]" in line:
+            level = "err"
+        else:
+            level = "info"
+        return LogLine(level, line)
+
 # START = "["
 # END = "]]"
 

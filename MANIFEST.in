@@ -1,0 +1,3 @@
+graft wlv/static
+graft wlv/templates
+global-exclude *.pyc

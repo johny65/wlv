@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <title>Web Log Viewer</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='styles.css') }}>
 </head>
 <body style="font-family: monospace">
+    <div>
     {% for l in log_content %}
         {% if l.level == "finer" %}
             <p><strong>{{ l }}</strong></p>
@@ -15,5 +17,6 @@
             <p>{{ l }}</p>
         {% endif %}
     {% endfor %}
+    </div>
 </body>
 </html>

@@ -49,7 +49,7 @@ def index():
     formatter = GlassfishFormatter()
     try:
         with open(log_path) as log_file:
-            log_content = [formatter.parse_line(line) for line in log_file.readlines()]
+            log_content = formatter.parse(log_file)
         return render_template("log.html", log_content=log_content)
     except FileNotFoundError:
         return "No se encontró el archivo de log ({}).".format(log_path)

@@ -8,6 +8,22 @@ class LogLine:
         return self.message
 
 class GlassfishFormatter:
+    def parse(self, file_object):
+        res = []
+        line = ""
+        for l in file_object:
+            line += l
+            # print("termina con:", l[-1:-5])
+            print(l)
+            print("entra?:", l.strip().endswith("]]"))
+            if l.strip().endswith("]]"):
+                res.append(self.parse_line(line))
+                line = ""
+        print("size:", len(res))
+        return res
+#         for line in f:
+#             if same and line.endswith(END):
+
     def parse_line(self, line):
         if "[MUY DETALLADO]" in line or "[FINER]" in line:
             level = "finer"

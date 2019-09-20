@@ -1,6 +1,6 @@
 import os
 from flask import Flask, session, redirect, url_for, escape, request, render_template
-from .logcollect import GlassfishFormatter
+from .logcollect import GlassfishParser
 
 app = Flask(__name__)
 
@@ -46,7 +46,7 @@ def index():
     if not log_path:
         return "Ningún log configurado."
     
-    parser = GlassfishFormatter()
+    parser = GlassfishParser()
     try:
         with open(log_path) as log_file:
             log_content = parser.parse(log_file)

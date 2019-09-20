@@ -1,3 +1,7 @@
+body {
+    font-family: monospace;
+}
+
 p {
     margin-bottom: 50px;
 }
@@ -5,4 +9,18 @@ p {
 div {
     width: 100%;
     overflow: hidden;
+}
+
+.debug {
+    color: gray;
+}
+
+.warning {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+.error {
+    color: darkred;
+    font-weight: bold;
 }

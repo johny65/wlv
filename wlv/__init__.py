@@ -46,10 +46,10 @@ def index():
     if not log_path:
         return "Ningún log configurado."
     
-    formatter = GlassfishFormatter()
+    parser = GlassfishFormatter()
     try:
         with open(log_path) as log_file:
-            log_content = formatter.parse(log_file)
+            log_content = parser.parse(log_file)
         return render_template("log.html", log_content=log_content)
     except FileNotFoundError:
         return "No se encontró el archivo de log ({}).".format(log_path)

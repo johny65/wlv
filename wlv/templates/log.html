@@ -7,11 +7,11 @@
 <body style="font-family: monospace">
     <div>
     {% for l in log_content %}
-        {% if l.level == "finer" %}
-            <p><strong>{{ l }}</strong></p>
-        {% elif l.level == "warn" %}
+        {% if l.level.name == "DEBUG" %}
+            <p style="color: gray;">{{ l }}</p>
+        {% elif l.level.name == "WARNING" %}
             <p style="color: goldenrod; font-weight: bold">{{ l }}</p>
-        {% elif l.level == "err" %}
+        {% elif l.level.name == "ERROR" %}
             <p style="color: darkred; font-weight: bold">{{ l }}</p>
         {% else %}
             <p>{{ l }}</p>

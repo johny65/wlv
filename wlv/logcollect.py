@@ -1,17 +1,18 @@
 import re
-from enum import Enum, auto
+from enum import Enum
 
 class Level(Enum):
-    CRITICAL = auto()
-    ERROR = auto()
-    WARNING = auto()
-    INFO = auto()
-    DEBUG = auto()
-    UNDEFINED = auto()
+    CRITICAL = 5
+    ERROR = 4
+    WARNING = 3
+    INFO = 2
+    DEBUG = 1
+    UNDEFINED = 0
 
 
 class LogLine:
-    def __init__(self, level, message, timestamp="", logger_name="", sub_name=""):
+    def __init__(self, index, level, message, timestamp="", logger_name="", sub_name=""):
+        self.index = index
         self.level = level
         self.message = message
         self.timestamp = timestamp
@@ -45,8 +46,12 @@ class GlassfishParser:
         "GRAVE": Level.ERROR,
         "SEVERE": Level.ERROR
     }
+    # levels that are not in the mapping falls in this category (this is different
+    # that undefined level):
+    level_other = Level.DEBUG
 
     def parse(self, file_object):
+        self.counter = 0
         res = []
         line = ""
         for l in file_object:
@@ -57,6 +62,7 @@ class GlassfishParser:
         return res
 
     def _parse_line(self, line):
+        self.counter += 1
         m = self.regex.match(line)
         if m:
             timestamp = self._get_group(m, "timestamp")
@@ -67,8 +73,8 @@ class GlassfishParser:
                 level = Level.UNDEFINED
             else:
                 level = self.level_mapping.get(level_string)
-                level = level if level else Level.DEBUG
-            return LogLine(level, body, timestamp, component)
+                level = level if level else self.level_other
+            return LogLine(self.counter, level, body, timestamp, component)
         else:
             return self._fallback_parse(line)
     
@@ -87,4 +93,4 @@ class GlassfishParser:
             level = Level.ERROR
         else:
             level = Level.UNDEFINED
-        return LogLine(level, line)
+        return LogLine(self.counter, level, line)

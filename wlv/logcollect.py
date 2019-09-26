@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from enum import Enum
 
 class Level(Enum):
@@ -37,6 +38,7 @@ class LogLine:
 
 class GlassfishParser:
     pattern = r"^\[(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}[\-\+]\d{4})\] \[.+\] \[(?P<alert_level>.+)\] \[.*\] \[(?P<component>[a-zA-Z.]*)\] \[[a-zA-Z._\s=\-:()0-9]*\] \[.*\] \[\[(?P<body>[\s\S]*)\]\]$"
+    timestamp_pfmt = "%Y-%m-%dT%H:%M:%S.%f%z"
     regex = re.compile(pattern)
     level_mapping = {
         "INFORMACIÓN": Level.INFO,
@@ -65,7 +67,7 @@ class GlassfishParser:
         self.counter += 1
         m = self.regex.match(line)
         if m:
-            timestamp = self._get_group(m, "timestamp")
+            timestamp = datetime.strptime(self._get_group(m, "timestamp"), self.timestamp_pfmt)
             body = self._get_group(m, "body")
             component = self._get_group(m, "component")
             level_string = self._get_group(m, "alert_level")

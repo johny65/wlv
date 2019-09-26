@@ -18,7 +18,8 @@
         {% else %}
         <p>
         {% endif %}
-            [{{ l.index }}] - [{{ l.level.name }}] - [{{ l.timestamp }}] - [{{ l.logger_name }}]:
+            [{{ l.index }}] - [{{ l.level.name }}] - [{{ l.timestamp|pretty_datetime }}]
+             - [{{ l.logger_name }}]:
             <br>
             {{ l.message }}
         </p>

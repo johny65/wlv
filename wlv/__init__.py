@@ -1,11 +1,15 @@
 import os
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from .logcollect import GlassfishParser
+from . import filters
 
 app = Flask(__name__)
 
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+# Jinja filters:
+app.jinja_env.filters['pretty_datetime'] = filters.wlv_datetime
 
 
 @app.route('/login', methods=['GET', 'POST'])

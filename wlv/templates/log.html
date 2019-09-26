@@ -13,10 +13,12 @@
         <p class="warning">
         {% elif l.level.name == "ERROR" %}
         <p class="error">
+        {% elif l.level.name == "CRITICAL" %}
+        <p class="critical">
         {% else %}
         <p>
         {% endif %}
-            [{{ l.level.name }}] - [{{ l.timestamp }}] - [{{ l.logger_name }}]:
+            [{{ l.index }}] - [{{ l.level.name }}] - [{{ l.timestamp }}] - [{{ l.logger_name }}]:
             <br>
             {{ l.message }}
         </p>

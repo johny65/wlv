@@ -24,3 +24,9 @@ div {
     color: darkred;
     font-weight: bold;
 }
+
+.critical {
+    color: darkred;
+    background-color: darksalmon;
+    font-weight: bold;
+}

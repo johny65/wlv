@@ -53,7 +53,7 @@ def index():
     parser = GlassfishParser()
     try:
         with open(log_path) as log_file:
-            log_content = parser.parse(log_file)
+            log_content = parser.parse(log_file, 20)
         return render_template("log.html", log_content=log_content)
     except FileNotFoundError:
         return "No se encontró el archivo de log ({}).".format(log_path)

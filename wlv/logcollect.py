@@ -52,7 +52,7 @@ class GlassfishParser:
     # that undefined level):
     level_other = Level.DEBUG
 
-    def parse(self, file_object):
+    def parse(self, file_object, limit=-1):
         self.counter = 0
         res = []
         line = ""
@@ -61,6 +61,8 @@ class GlassfishParser:
             if l.strip().endswith("]]"):
                 res.append(self._parse_line(line.strip()))
                 line = ""
+                if limit == self.counter:
+                    break
         return res
 
     def _parse_line(self, line):

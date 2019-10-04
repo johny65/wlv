@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Web Log Viewer</title>
     <link rel="stylesheet" href={{ url_for('static', filename='styles.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='bulma.css') }}>
 </head>
 <body>
-    <div>
-    {% for l in log_content %}
-        {% if l.level.name == "DEBUG" %}
-        <p class="debug">
-        {% elif l.level.name == "WARNING" %}
-        <p class="warning">
-        {% elif l.level.name == "ERROR" %}
-        <p class="error">
-        {% elif l.level.name == "CRITICAL" %}
-        <p class="critical">
-        {% else %}
-        <p>
-        {% endif %}
-            [{{ l.index }}] - [{{ l.level.name }}] - [{{ l.timestamp|pretty_datetime }}]
-             - [{{ l.logger_name }}]:
-            <br>
-            {{ l.message }}
-        </p>
-    {% endfor %}
+    <div class="container">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Level</th>
+                    <th>Timestamp</th>
+                    <th>Log name</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for l in log_content %}
+                {% if l.level.name == "INFO" %}
+                <tr class="info">
+                {% elif l.level.name == "DEBUG" %}
+                <tr class="debug">
+                {% elif l.level.name == "WARNING" %}
+                <tr class="warning">
+                {% elif l.level.name == "ERROR" %}
+                <tr class="error">
+                {% elif l.level.name == "CRITICAL" %}
+                <tr class="critical">
+                {% else %}
+                <tr>
+                {% endif %}
+                    <td>[{{ l.index }}]</td>
+                    <td>[{{ l.level.name }}]</td>
+                    <td>[{{ l.timestamp|pretty_datetime }}]</td>
+                    <td>[{{ l.logger_name }}]</td>
+                </tr>
+                <tr><td colspan="4" class="is-fullwidth">{{ l.message }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

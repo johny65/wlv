@@ -11,6 +11,10 @@ div {
     overflow: hidden;
 }
 
+.info {
+    color: mediumseagreen;
+}
+
 .debug {
     color: gray;
 }

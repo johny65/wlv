@@ -1,3 +1,4 @@
+import sys
 from setuptools import find_packages, setup
 
 def get_version():
@@ -15,3 +16,6 @@ setup(
         'flask',
     ],
 )
+
+if sys.argv[1] == "bdist_wheel":
+    print("Built version", get_version())
